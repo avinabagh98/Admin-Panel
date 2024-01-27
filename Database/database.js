@@ -3,7 +3,8 @@ const { Sequelize, DataTypes } = require('sequelize');
 
 const database = new Sequelize('myDb', 'root', '', {
     host: 'localhost',
-    dialect: 'mysql'
+    dialect: 'mysql',
+    logging: false
 })
 
 try {
