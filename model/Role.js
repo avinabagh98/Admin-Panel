@@ -1,6 +1,6 @@
-const { Database, DataTypes } = require('./database');
+const { Database, DataTypes } = require('../Database/database');
 
-const usertype = Database.define('usertype', {
+const role = Database.define('role', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -10,16 +10,15 @@ const usertype = Database.define('usertype', {
     name: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+            isIn: [['super_admin', 'admin', 'data_entry_operator']],
+        }
 
     },
-    userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        unique: true
-    }
+
 
 }, {
     freezeTableName: true
 });
 
-module.exports = usertype;
+module.exports = role;

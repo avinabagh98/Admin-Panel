@@ -1,21 +1,45 @@
 //Database Connection
-const Database = require('../model/database')
+const Database = require('../Database/database')
 
-//Models ////////////
-const Usertype = require('../model/usertype');
+///////////////////Models////////////////////////////////////////////////////////
+
+const Role = require('../model/Role');
 try {
-    Usertype.sync({ alter: true });
-} catch (error) { }
+    Role.sync({ alter: true });
+} catch (error) { console.log(error) }
 
 
 const User = require('../model/user');
 try {
     User.sync({ alter: true });
-} catch (error) { }
+} catch (error) { console.log(error) }
 
-//Associations/////////
-User.hasOne(Usertype, { foreignKey: 'userId', onDelete: 'cascade' });
-Usertype.belongsTo(User);
+
+const Permission = require('../model/permission');
+try {
+    Permission.sync({ alter: true });
+}
+catch (error) { console.log(error) }
+
+const RolePermission = require('../model/rolePermissionAlot');
+try {
+    RolePermission.sync({ alter: true });
+}
+catch (error) { console.log(error) }
+
+
+
+/////////////////////////////Associations/////////////////////////////////////////////////////
+
+Role.hasMany(User, { foreignKey: 'roleId', onDelete: 'cascade' }); //OneToMany
+User.belongsTo(Role)
+
+Role.belongsToMany(Permission, { through: RolePermission, onDelete: 'cascade' });
+Permission.belongsToMany(Role, { through: RolePermission });
+
+
+
+
 
 //Server Connection ---------------------------------------------------------------
 const express = require('express');
@@ -31,28 +55,27 @@ server.use(bodyParser.json());
 
 
 //Routes/ APIs  ---------------------------------------------------------------
+//Importing controllers
+const userController = require('../controller/userController');
+const roleController = require('../controller/roleController');
+const permissionController = require('../controller/permissionController');
+const rolePermissionController = require('../controller/alotControllers/rolePermission');
 
 //USER API
-server.get('/getuser', async (req, res) => {
-    const response = await User.findAll();
-    res.json(response)
-});
+server.get('/getuser', userController.addUser);
+server.post('/adduser', userController.getUser);
 
-server.post('/adduser', async (req, res) => {
-    const response = await User.create(req.body);
-    res.json(response)
-});
+// Role-API
+server.get('/getrole', roleController.getRole);
+server.post('/addrole', roleController.addRole);
 
-// Usertype-API
-server.get('/getusertype', async (req, res) => {
-    const response = await Usertype.findAll();
-    res.json(response)
-});
+// Permission-API
+server.get('/getpermission', permissionController.getPermission);
+server.post('/addpermission', permissionController.addpermission);
 
-server.post('/addusertype', async (req, res) => {
-    const response = await Usertype.create(req.body);
-    res.json(response)
-});
+//rolePermissionAlot-API
+server.get('/getrolepermissionalot', rolePermissionController.getRolePermission);
+server.post('/addrolepermissionalot', rolePermissionController.addRolePermission);
 
 
 

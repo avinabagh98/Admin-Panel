@@ -1,4 +1,4 @@
-const { Database, DataTypes } = require('./database');
+const { Database, DataTypes } = require('../Database/database');
 
 const user = Database.define('user', {
     id: {
@@ -20,6 +20,11 @@ const user = Database.define('user', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    roleId: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    }
+
 
 }, {
     freezeTableName: true
