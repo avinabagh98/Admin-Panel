@@ -1,0 +1,34 @@
+.container {
+    width: 100%;
+    height: 100vh;
+
+}
+
+.formContainer {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: bisque;
+}
+
+.form {
+    margin: auto;
+    height: 55vh;
+    width: 50%;
+    padding: 2rem;
+    background-color: darksalmon;
+}
+
+.heading {
+    font-size: 30px;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: whitesmoke;
+}
+
+.bottomLink {
+    text-align: center;
+}

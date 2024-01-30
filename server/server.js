@@ -56,7 +56,7 @@ server.use(bodyParser.json());
 
 //Routes/ APIs  ---------------------------------------------------------------
 //Importing middlewires
-const fetchUser = require('../middlewires/fetchUser');
+const fetchUser = require('../middlewares/fetchUser');
 
 //Importing controllers
 const userController = require('../controller/userController');
@@ -66,12 +66,15 @@ const rolePermissionController = require('../controller/alotControllers/rolePerm
 
 //USER API
 server.get('/getuser', fetchUser, userController.getUser);
+server.get('/getuserwithrole', fetchUser, userController.getUserwithRole);
 server.post('/adduser', userController.addUser);
 server.post('/login', userController.login);
+server.put('/updateuser/:id', userController.updateUser);
 
 // Role-API
-server.get('/getrole', roleController.getRole);
+server.get('/getroles', roleController.getRoles);
 server.post('/addrole', roleController.addRole);
+server.post('/getrolebyid/:id', roleController.getRoleById);
 
 // Permission-API
 server.get('/getpermission', permissionController.getPermission);
