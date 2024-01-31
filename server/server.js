@@ -65,11 +65,15 @@ const permissionController = require('../controller/permissionController');
 const rolePermissionController = require('../controller/alotControllers/rolePermission');
 
 //USER API
-server.get('/getuser', fetchUser, userController.getUser);
+server.get('/getusers', fetchUser, userController.getUsers);
+server.get('/getuserbyid', fetchUser, userController.getUserById);
 server.get('/getuserwithrole', fetchUser, userController.getUserwithRole);
+server.get('/getalluserwithrole', fetchUser, userController.getallUserwithRole);
+server.get('/getuserrolewithid/:id', userController.getUserRolewithId);
 server.post('/adduser', userController.addUser);
 server.post('/login', userController.login);
 server.put('/updateuser/:id', userController.updateUser);
+server.delete('/deleteuser/:id', userController.deleteUser);
 
 // Role-API
 server.get('/getroles', roleController.getRoles);

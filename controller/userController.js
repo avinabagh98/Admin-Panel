@@ -8,7 +8,25 @@ const User = require('../model/user');
 const Role = require('../model/Role');
 
 //routes
-const getUser = async (req, res) => {
+
+
+const getUsers = async (req, res) => {
+    try {
+        const isUser = await User.findOne({ where: { id: req.userId } });
+        if (isUser) {
+            const response = await User.findAll({
+                attributes: { exclude: ['password'] }
+            });
+            res.status(201).json(response);
+        }
+
+    } catch (error) {
+        res.status(401).json({ "message": error.response.data.message, 'success': false });
+    }
+}
+
+
+const getUserById = async (req, res) => {
     const isUser = await User.findOne({ where: { id: req.userId } });
     if (isUser) {
         const response = await User.findAll({
@@ -41,29 +59,44 @@ const getUserwithRole = async (req, res) => {
 };
 
 
+const getallUserwithRole = async (req, res) => {
+    const isUser = await User.findOne({ where: { id: req.userId } });
+    if (isUser) {
+        const response = await User.findAll({
+            attributes: { exclude: ['password'] },
+            include: {
+                model: Role,
+                attributes: ['name']
+            }
+        });
+        res.json(response)
+    }
+    else {
+        res.status(401).json({ "message": 'Access Denied / User not logged in', 'success': false });
+    }
+};
 
-// const addUser = async (req, res) => {
-//     const { password } = req.body;
 
-//     try {
-//         const securePass = await bcrypt.hash(password, 10);
-//         req.body.password = securePass;
+const getUserRolewithId = async (req, res) => {
+    const isUser = await User.findOne({ where: { id: req.params.id } });
+    if (isUser) {
+        const response = await User.findAll({
+            where: { id: req.params.id },
+            attributes: { exclude: ['password'] },
+            include: {
+                model: Role,
+                attributes: ['name']
+            }
+        });
+        res.json(response)
+    }
+    else {
+        res.status(401).json({ "message": "No user found", 'success': false });
+    }
+}
 
-//         const createdUser = await User.create(req.body);
 
-//         if (createdUser) {
-//             res.json({ 'message': 'User Added Successfully', 'success': true });
-//         } else {
-//             res.json({ 'message': 'Failed to create user', 'success': false });
-//         }
-//     } catch (error) {
-//         if (error.name === 'SequelizeUniqueConstraintError') {
-//             res.json({ 'message': 'User with this username already exists. Please choose a different username.', 'success': false });
-//         } else {
-//             res.json({ 'message': error.message, 'success': false });
-//         }
-//     }
-// };
+
 
 const addUser = async (req, res) => {
     const { password } = req.body;
@@ -92,16 +125,30 @@ const addUser = async (req, res) => {
 const updateUser = async (req, res) => {
 
     try {
-        const updatedUser = await User.update(req.body, { where: { id: req.params.id } });
-        if (updatedUser) {
-            res.status(201).json({ 'message': 'User Updated Successfully', 'success': true });
+        const updatedVal = await User.update(req.body, { where: { id: req.params.id } });
+        if (updatedVal) {
+            res.status(201).json({ 'response': updatedVal, 'message': 'User Updated Successfully', 'success': true });
         } else {
-            res.status(401).json({ 'message': 'Failed to update user', 'success': false });
+            res.status(401).json({ 'response': updatedVal, 'message': 'Failed to update user', 'success': false });
         }
     } catch (error) {
         res.status(500).json({ 'message': error.message, 'success': false });
     }
 }
+
+const deleteUser = async (req, res) => {
+    try {
+        const deletedVal = await User.destroy({ where: { id: req.params.id } });
+        if (deletedVal) {
+            res.status(201).json({ 'response': deletedVal, 'message': 'User Deleted Successfully', 'success': true });
+        } else {
+            res.status(401).json({ 'response': deletedVal, 'message': 'Failed to delete user', 'success': false });
+        }
+    } catch (error) {
+        res.status(500).json({ 'message': error.message, 'success': false });
+    }
+}
+
 
 
 
@@ -140,9 +187,13 @@ const login = async (req, res) => {
 
 //exporting
 module.exports = {
+    getUsers,
     addUser,
-    getUser,
+    getUserById,
     updateUser,
+    getallUserwithRole,
     getUserwithRole,
+    getUserRolewithId,
+    deleteUser,
     login
 }
