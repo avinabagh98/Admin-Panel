@@ -10,7 +10,7 @@ export function MyVerticallyCenteredModal(props) {
 
     try {
         // const randomNum = Math.floor(Math.random() * 100);
-        const [id, setId] = useState(props.user.id);
+        // const [id, setId] = useState(props.user.id);
         const [name, setName] = useState(props.user.name);
         const [username, setUsername] = useState(props.user.username);
         const [role, setRole] = useState(props.user.role.name);

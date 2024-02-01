@@ -51,10 +51,10 @@ export default function User() {
 
     const updateHandler = (user) => {
         try {
-            //console.log(user);
-            setModalShow(true);
-            setSelectedUser(user);
-            // router.push('/update')
+
+            // setModalShow(true);
+            // setSelectedUser(user);
+            router.push(`/update/${user.id}`)
         } catch (error) {
             swal(error);
         }

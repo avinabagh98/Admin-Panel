@@ -1,64 +1,66 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import { Form, Button, Col, Row } from 'react-bootstrap';
+import axios from 'axios';
 import swal from 'sweetalert';
+import { useRouter } from 'next/navigation';
+import e from 'cors';
 
-export default function UpdateForm({ props }) {
+export default function UpdateForm({ id, name, username, role }) {
 
-    const { id } = props;
+    const router = useRouter();
 
-    const [username, setUsername] = useState('');
-    const [name, setName] = useState('');
-    const [role, setRole] = useState('');
+    const [newName, setNewName] = useState(name);
+    const [newUsername, setNewUsername] = useState(username);
+    const [newRole, setNewRole] = useState(role);
 
+    const updatedUser = {
+        id: id,
+        name: newName,
+        username: newUsername,
+        role: newRole
+    }
 
+    // useEffect(() => {
+    //   setNewName()
+    // }, []);
 
-    useEffect(() => {
+    const updateFormSubmit = async (updatedUser) => {
         try {
-            async function fetchuserData(id) {
-                try {
-                    const res = await axios.get(`http://localhost:8080/getuserrolewithid/${id}`);
-                    setName(res.data.name);
-                    setUsername(res.data.username);
-                    setRole(res.data.role);
-
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-            fetchuserData(id);
-        } catch (error) {
-            console.log(error);
-        }
-    }, []);
-
-    const handleUpdateFormSubmit = async (updatedUser) => {
-        try {
-            const response = await axios.put(`http://localhost:8080/updateuser/${id}`, updatedUser);
+            const response = await axios.put(`http://localhost:8080/updateuser/${updatedUser.id}`, updatedUser);
             swal(response.data.message);
         } catch (error) {
             console.log(error)
         }
     }
 
+    const handleUpdateFormSubmit = (e) => {
+        e.preventDefault();
+        updateFormSubmit(updatedUser).then(router.push('/user'));
+    };
+
     return (
         <>
-            <Form onSubmit={handleUpdateFormSubmit}>
+            <Form onSubmit={handleUpdateFormSubmit} className='bg-dark m-5 p-2'>
                 <Row className="align-items-center">
                     <Col sm={3} className="my-1">
                         <Form.Control id="inlineFormInputName"
                             type="text"
                             placeholder="Name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)} />
+                            value={newName}
+                            onChange={(e) => {
+                                setNewName(e.target.value)
+                            }}
+                        />
                     </Col>
                     <Col sm={3} className="my-1">
                         <Form.Control
                             id="inlineFormInputGroupUsername"
                             placeholder="Username"
                             type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            value={newUsername}
+                            onChange={(e) => setNewUsername(e.target.value)}
                         />
                     </Col>
 
@@ -67,12 +69,12 @@ export default function UpdateForm({ props }) {
                             id="inlineFormInputGroupUsername"
                             placeholder="Role"
                             type="text"
-                            value={role}
-                            onChange={(e) => setRole(e.target.value)}
+                            value={newRole}
+                            onChange={(e) => setNewRole(e.target.value)}
                         />
                     </Col>
                     <Col xs="auto" className="my-1">
-                        <Button type="submit" onClick={props.onHide}>Update</Button>
+                        <Button type="submit" variant='warning'>Update</Button>
                     </Col>
                 </Row>
             </Form>
