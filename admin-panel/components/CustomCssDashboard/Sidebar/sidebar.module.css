@@ -1,4 +1,5 @@
 /* Sidebar styles */
+
 .sidebar {
     background-color: #2a2a44;
     height: 100vh;
@@ -10,25 +11,8 @@
 /* Main content styles */
 .mainContent {
     padding: 0;
+    height: 20vh;
 }
-
-/* Navbar styles */
-.navbar {
-    background-color: #1f4068;
-    padding-right: 20px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-
-
-}
-
-/* Navbar link styles */
-.navbar a {
-    color: #ffffff !important;
-}
-
 
 
 /* Heading styles */
@@ -65,8 +49,4 @@
 .sidebar a:hover {
     color: #61dafb;
     /* Light blue color on hover */
-}
-
-.icon {
-    color: #ffffff;
 }

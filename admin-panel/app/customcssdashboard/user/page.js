@@ -5,7 +5,8 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { Container, Table, Button, Modal } from 'react-bootstrap'
 import swal from 'sweetalert';
-// import { MyVerticallyCenteredModal } from '../../../components/modal'
+import ComponentCard from "@/components/ComponentsCard/ComponentCard";
+
 
 
 
@@ -42,11 +43,6 @@ export default function User() {
         }
     }, [users])
 
-
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        router.push("/login");
-    };
 
 
     const updateHandler = (user) => {
@@ -89,59 +85,56 @@ export default function User() {
 
 
     return (
-        <> <Container>
-            <div>
-                <h1 className=" my-3 p-3 text-primary text-center">Your User Dashboard</h1>
-            </div>
+        <>
+            <ComponentCard>
+                <Container className="mt-2 px-3">
+                    <div className="table-container">
+                        <Table striped bordered hover>
+                            <thead>
+                                <tr key={users.id}>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Username</th>
+                                    <th>RoleId</th>
+                                    <th>Role</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
 
-            <div>
-                <Table striped bordered hover>
-                    <thead>
-                        <tr key={users.id}>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Username</th>
-                            <th>RoleId</th>
-                            <th>Role</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
+                                    users.map((user) => {
 
-                            users.map((user) => {
+                                        return (
+                                            <tr key={user.id}>
 
-                                return (
-                                    <tr key={user.id}>
+                                                <td className="row-data">{user.id}</td>
+                                                <td className="row-data">{user.name}</td>
+                                                <td className="row-data">{user.username}</td>
+                                                <td className="row-data">{user.roleId}</td>
+                                                <td className="row-data">{user.role.name}</td>
+                                                <td className="row-data d-flex gap-2">
+                                                    <div>
+                                                        <Button variant="warning" onClick={() => { updateHandler(user) }} className="update">
+                                                            Update
+                                                        </Button>
+                                                    </div>
 
-                                        <td className="row-data">{user.id}</td>
-                                        <td className="row-data">{user.name}</td>
-                                        <td className="row-data">{user.username}</td>
-                                        <td className="row-data">{user.roleId}</td>
-                                        <td className="row-data">{user.role.name}</td>
-                                        <td className="row-data d-flex gap-2">
-                                            <div>
-                                                <Button variant="warning" onClick={() => { updateHandler(user) }} className="update">
-                                                    Update
-                                                </Button>
-                                            </div>
+                                                    <div>
+                                                        <Button variant="danger" onClick={() => { deleteHandler(user.id) }} className="delete">
+                                                            Delete
+                                                        </Button>
+                                                    </div></td>
 
-                                            <div>
-                                                <Button variant="danger" onClick={() => { deleteHandler(user.id) }} className="delete">
-                                                    Delete
-                                                </Button>
-                                            </div></td>
-
-                                    </tr>
+                                            </tr>
 
 
-                                )
-                            })}
-                    </tbody>
-                </Table>
-            </div>
-
-            {/* <div>
+                                        )
+                                    })}
+                            </tbody>
+                        </Table>
+                    </div>
+                    {/* <div>
                 <MyVerticallyCenteredModal
                     show={modalShow}
                     onHide={() => setModalShow(false)}
@@ -149,14 +142,9 @@ export default function User() {
 
                 />
             </div> */}
+                </Container>
+            </ComponentCard>
 
-            <div className="m-3">
-
-                <Button variant="danger" onClick={handleLogout} className="logout">
-                    Logout
-                </Button>
-            </div>
-        </Container>
         </>
     )
 }

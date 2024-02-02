@@ -31,7 +31,7 @@ export default function Login() {
             if (response.data.success) {
                 const token = response.data.token
                 localStorage.setItem("token", token);
-                router.push('/user')
+                router.push('/customcssdashboard')
 
             }
             if (response.status === 401) {

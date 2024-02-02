@@ -22,10 +22,6 @@ export default function UpdateForm({ id, name, username, role }) {
         role: newRole
     }
 
-    // useEffect(() => {
-    //   setNewName()
-    // }, []);
-
     const updateFormSubmit = async (updatedUser) => {
         try {
             const response = await axios.put(`http://localhost:8080/updateuser/${updatedUser.id}`, updatedUser);
@@ -37,7 +33,7 @@ export default function UpdateForm({ id, name, username, role }) {
 
     const handleUpdateFormSubmit = (e) => {
         e.preventDefault();
-        updateFormSubmit(updatedUser).then(router.push('/user'));
+        updateFormSubmit(updatedUser).then(router.push('/customcssdashboard/user'));
     };
 
     return (
