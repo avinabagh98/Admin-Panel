@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react"
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { Form, Row, Col, InputGroup, Table, Button, Modal } from 'react-bootstrap'
+import { Container, Table, Button, Modal } from 'react-bootstrap'
 import swal from 'sweetalert';
-import { MyVerticallyCenteredModal } from '../../components/modal'
+// import { MyVerticallyCenteredModal } from '../../../components/modal'
 
 
 
@@ -89,42 +89,9 @@ export default function User() {
 
 
     return (
-        <>
+        <> <Container>
             <div>
                 <h1 className=" my-3 p-3 text-primary text-center">Your User Dashboard</h1>
-            </div>
-
-            <div className="profile d-none">
-
-                <Table striped bordered hover>
-                    <thead>
-                        <tr key={users.id}>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Username</th>
-                            <th>RoleId</th>
-                            <th>Role</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            users.map((user) => {
-
-                                return (
-                                    <tr key={user.id}>
-                                        <td className="row-data">{user.id}</td>
-                                        <td className="row-data">{user.name}</td>
-                                        <td className="row-data">{user.username}</td>
-                                        <td className="row-data">{user.roleId}</td>
-                                        <td className="row-data">{user.role.name}</td>
-
-                                    </tr>
-                                )
-                            })}
-                    </tbody>
-                </Table>
-
-
             </div>
 
             <div>
@@ -174,14 +141,14 @@ export default function User() {
                 </Table>
             </div>
 
-            <div>
+            {/* <div>
                 <MyVerticallyCenteredModal
                     show={modalShow}
                     onHide={() => setModalShow(false)}
                     user={selectedUser}
 
                 />
-            </div>
+            </div> */}
 
             <div className="m-3">
 
@@ -189,6 +156,7 @@ export default function User() {
                     Logout
                 </Button>
             </div>
+        </Container>
         </>
     )
 }
