@@ -1,12 +1,35 @@
 /* Sidebar styles */
-
 .sidebar {
     background-color: #2a2a44;
     height: 100vh;
     padding-top: 15px;
     color: #ffffff;
+}
+
+.sidebarHeader {
+    height: 80px;
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
 }
+
+.sidebarHeaderIcon {
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.sidebarMenu {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 15px;
+}
+
+
 
 /* Main content styles */
 .mainContent {
@@ -31,22 +54,13 @@
     font-weight: bold;
 }
 
-/* Sidebar header styles */
-.sidebar-header {
-    background-color: #1f4068;
-    padding: 10px;
-    text-align: center;
-    color: #ffffff;
-
-}
-
-/* Sidebar navigation styles */
-.sidebar-nav {
-    padding-top: 20px;
-}
-
 /* Sidebar navigation link hover styles */
 .sidebar a:hover {
     color: #61dafb;
     /* Light blue color on hover */
+}
+
+.sidebar.collapsed {
+    width: 80px;
+    /* Reduce the width when the sidebar is collapsed */
 }

@@ -4,7 +4,7 @@ import React from 'react';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import styles from './Topbar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faBackward } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
 
 
