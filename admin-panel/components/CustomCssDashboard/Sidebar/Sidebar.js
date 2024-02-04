@@ -1,45 +1,56 @@
 "use client";
 // Import necessary libraries
-import React, { useState } from 'react';
-import { Nav } from 'react-bootstrap';
-import styles from './sidebar.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBackspace, faBars } from '@fortawesome/free-solid-svg-icons';
+
+import { Nav } from "react-bootstrap";
+import styles from "./sidebar.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBars,
+  faCircleChevronLeft,
+  faGear,
+  faSquare,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 // Main component for Admin Panel
-const Sidebar = () => {
+const Sidebar = ({ toggleSidebar, isCollapsed }) => {
+  
+  return (
+    <>
+      <div className={styles.sidebar}>
 
-    const [isCollapsed, setIsCollapsed] = useState(false);
+        <div className={styles.sidebarHeader}>
+          {isCollapsed ? <></> : <h4 className="mb-0">Admin Panel</h4>}
+          <FontAwesomeIcon
+            icon={isCollapsed ? faBars :  faCircleChevronLeft}
+            className={styles.sidebarHeaderIcon}
+            onClick={toggleSidebar}
+          />
+        </div>
 
-    const toggleSidebar = () => {
-        setIsCollapsed(!isCollapsed);
-    };
+        <div className={styles.sidebarMenu}>
+          <Nav defaultActiveKey="/customcssdashboard" className={styles.sidebarMenu}>
 
-    return (
-        <>
-
-            <div className={`${styles.sidebar} ${isCollapsed ? styles.collapsed : ''}`} >
-                <div className={styles.sidebarHeader}>
-                    <h4>Admin Panel</h4>
-                    <FontAwesomeIcon icon={(isCollapsed) ? faBars : faBackspace}
-                        className={styles.sidebarHeaderIcon}
-                        onClick={toggleSidebar} />
-                </div>
-                <div className={styles.sidebarMenu}>
-                    <Nav defaultActiveKey="/customcssdashboard" className="flex-column">
-                        <Nav.Link href="/customcssdashboard">Dashboard</Nav.Link>
-                        <Nav.Link href="/customcssdashboard/user">Users</Nav.Link>
-                        <Nav.Link href="/settings">Settings</Nav.Link>
-                    </Nav>
-                </div>
-
+            <div className={`${styles.sidebarMenuLink}${isCollapsed ? "collapsed" : ""}`}>
+              <FontAwesomeIcon icon={faSquare} />
+              {isCollapsed ? (<></>) : (<Nav.Link href="/customcssdashboard">Dashboard</Nav.Link>)}
             </div>
 
+            <div className={`${styles.sidebarMenuLink}${isCollapsed ? "collapsed" : ""}`}>
+              <FontAwesomeIcon icon={faUser} />
+              {isCollapsed ? (<></>) : (<Nav.Link href="/customcssdashboard/user">Users</Nav.Link>)}
+              
+            </div>
 
-        </>
-    );
+            <div className={`${styles.sidebarMenuLink}${isCollapsed ? "collapsed" : ""}`}>
+              <FontAwesomeIcon icon={faGear} />
+              {isCollapsed ? (<></>) : (<Nav.Link href="/settings">Settings</Nav.Link>)}
+            </div>
+          </Nav>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default Sidebar;
-
-

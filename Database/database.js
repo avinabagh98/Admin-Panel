@@ -1,7 +1,7 @@
 //Database Connection
 const { Sequelize, DataTypes } = require('sequelize');
 
-const database = new Sequelize('myDb', 'root', '', {
+const database = new Sequelize('mydb', 'root', '', {
     host: 'localhost',
     dialect: 'mysql',
     logging: false
