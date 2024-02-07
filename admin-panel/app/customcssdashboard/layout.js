@@ -17,7 +17,7 @@ export default function CustomCssDashboardLayout({ children }) {
     <>
       <Container fluid>
         <Row>
-          <Col md={isCollapsed ? 1 : 2}>
+          <Col md={isCollapsed ? 1 : 2} className={styles.sidebar}>
             <Sidebar toggleSidebar={toggleSidebar} isCollapsed={isCollapsed} />
           </Col>
           <Col md={isCollapsed ? 11 : 10}>
